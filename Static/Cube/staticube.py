@@ -10,11 +10,11 @@ then surface must be passed into the screen argument
 Note2: by default draws a red cube if color parameter & extras aren't passed in
 '''
 import pygame
-size = 100
 x = 0
 y = 0
 def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True, outline_width=0, outline_col=(225, 225, 225)):
-   X,Y = size = screen.get_width(), screen.get_height()
+   X = screen.get_width()
+   Y = screen.get_height()
    offset = size / 2
    truex = x + offset
    truey = y - offset
@@ -26,7 +26,7 @@ def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True
    truesize = act_z + size * act_z + 5
    Pos = [
    (x + 10, y + 10),
-   (x + X / 2 + size, y + Y / 2 - size),
+   (int(x + X / 2) + size, int(y + Y / 2) - size),
    (20, 20),
    (10, 20)
    ]
