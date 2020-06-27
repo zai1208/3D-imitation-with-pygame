@@ -12,10 +12,11 @@ Note2: by default draws a red cube if color parameter & extras aren't passed in
 import pygame
 x = 0
 y = 0
-def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True, outline_width=0, outline_col=(225, 225, 225)):
+def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True, outline_width=1, outline_col=(225, 225, 225)):
+   truesize = size + z
    X = screen.get_width()
    Y = screen.get_height()
-   offset = size / 2
+   offset = truesize / 2
    truex = x + offset
    truey = y - offset
 
@@ -23,18 +24,17 @@ def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True
        act_z = 1
    else:
        act_z = z
-   truesize = act_z + size * act_z + 5
    Pos = [
-   (x + 10, y + 10),
-   (int(x + X / 2) + size, int(y + Y / 2) - size),
-   (20, 20),
-   (10, 20)
+   [x + 10, y + 10],
+   [int(x + X / 2) + truesize, int(y + Y / 2) - truesize],
+   [20, 20],
+   [10, 20]
    ]
    Pos2 = [
-   (Pos[0[0]] + size / 4, Pos[0[1]] + size / 4),
-   (Pos2[0[0]] + size / 2, Pos2[0[1]]),
-   (Pos2[1[0]], Pos2[1[1]] + size / 2),
-   (Pos2[0[0]], Pos2[0[1]] + size / 2)
+   (Pos[0][0] - truesize / 4, Pos[0][1] + truesize / 4),
+   (Pos[0][0] - truesize / 4 + truesize / 2, Pos[0][1] + truesize / 4),
+   (Pos[0][0] - truesize / 4 + truesize / 2, Pos[0][1] + truesize / 4 + truesize / 2),
+   (Pos[0][0] - truesize / 4, Pos[0][1] + truesize / 4 + truesize / 2)
    ]
    Pos3 = [
    Pos[0],
@@ -53,11 +53,12 @@ def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True
    Pos2[1],
    Pos[1]
    ]
+
    Pos6 = [
    Pos[3],
    Pos2[3],
    Pos2[2],
-   Pos1[2]
+   Pos[2]
    ]
    if wireframe == False:
        # first side (the front)
@@ -77,13 +78,13 @@ def Cube(size, screen, x, y, z, color=(225, 0, 0), wireframe=False, outline=True
        right = pygame.draw.polygon(screen, color, Pos4)
        # fifth side (the top)
 
-       top = pygame.draw.polygon(screeen, color, Pos5)
+       top = pygame.draw.polygon(screen, color, Pos5)
 
        # sixth side(the bottom)
-       pygame.draw.polygon(screen, color, Pos6)
+       bottom = pygame.draw.polygon(screen, color, Pos6)
    if outline == True:
       # outlines drawn if wanted
-      pygame.draw.lines(screen, (225, 225, 225), Pos, width=outline_width)
-      pygame.draw.lines(screen, (225, 225, 225), Pos2, width=outline_width)
-      pygame.draw.lines(screen, (225, 225, 225), Pos3, width=outline_width)
-      pygame.draw.lines(screen, (225, 225, 225), Pos4, width=outline_width)
+      pygame.draw.lines(screen, (225, 225, 225), True, list(Pos), width=outline_width)
+      pygame.draw.lines(screen, (225, 225, 225), True, list(Pos2), width=outline_width)
+      pygame.draw.lines(screen, (225, 225, 225), True, list(Pos3), width=outline_width)
+      pygame.draw.lines(screen, (225, 225, 225), True, list(Pos4), width=outline_width)
